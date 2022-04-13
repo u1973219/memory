@@ -11,6 +11,9 @@
 function phaser_game(){
 	loadpage("phasergame.html");
 }
+function phaser_game2(){
+	loadpage("phasergame2.html");
+}
 
 function exit (){
 	if (name != ""){

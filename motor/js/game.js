@@ -63,7 +63,7 @@ class GameScene extends Phaser.Scene {
 			cardsPlaying.push(arraycards[j]);
 		}
 		shuffle(cardsPlaying);
-		console.log(cardsPlaying);
+
 
 
 		this.cameras.main.setBackgroundColor(0xBFFCFF);
@@ -91,7 +91,7 @@ class GameScene extends Phaser.Scene {
 						else this.score -= 40;
 						setTimeout(() =>{
 							card.enableBody(false, 0, 0, true, true);
-
+							//this.firstClick.enableBody(false, 0, 0, true, true);
 						},1000);
 						this.firstClick.enableBody(false, 0, 0, true, true);
 						if (this.score <= 0){
