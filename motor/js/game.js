@@ -30,6 +30,8 @@ var load_param = function (){
 load_param();
 
 
+
+
 class GameScene extends Phaser.Scene {
     constructor (){
         super('GameScene');
@@ -52,6 +54,7 @@ class GameScene extends Phaser.Scene {
     create (){
 		let arraycards = ['co', 'cb','sb','so','tb','to'];
 		let numbercards = options_game.cards;
+		let difficulty = options_game.dificulty;
 		var cardsPlaying = [];
 
 		shuffle(arraycards);
@@ -83,9 +86,14 @@ class GameScene extends Phaser.Scene {
 				card.disableBody(true,true);
 				if (this.firstClick){
 					if (this.firstClick.card_id !== card.card_id){
-						this.score -= 20;
+						if(difficulty === "easy") this.score -= 20;
+						else if (difficulty === "normal") this.score -= 30;
+						else this.score -= 40;
+						setTimeout(() =>{
+							card.enableBody(false, 0, 0, true, true);
+
+						},1000);
 						this.firstClick.enableBody(false, 0, 0, true, true);
-						card.enableBody(false, 0, 0, true, true);
 						if (this.score <= 0){
 							alert("Game Over");
 							loadpage("../");

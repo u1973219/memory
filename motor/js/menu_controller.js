@@ -9,7 +9,7 @@
 //}
 
 function phaser_game(){
-	loadpage("./html/phasergame.html");
+	loadpage("phasergame.html");
 }
 
 function exit (){
