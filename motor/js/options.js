@@ -1,3 +1,5 @@
+"use strict";
+
 var options = function(){
 	// Aquí dins hi ha la part privada de l'objecte
 	var options_data = {
@@ -56,5 +58,6 @@ var options = function(){
 	}; 
 }();
 
+console.log(options.getNumOfCards());
 
 

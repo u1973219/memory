@@ -1,3 +1,5 @@
+"use strict";
+
 var gameObj = function (){
 	const back = "../resources/back.png";
 	const items = ["../resources/cb.png","../resources/co.png","../resources/sb.png",

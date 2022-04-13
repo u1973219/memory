@@ -1,3 +1,5 @@
+"use strict";
+
 var load_obj = function(){
 	var vue_instance = new Vue({
 		el: "#saves_id",

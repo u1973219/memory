@@ -1,10 +1,12 @@
-function start_game(){
-	name = prompt("User name");
+"use strict";
+
+//function start_game(){
+//	name = prompt("User name");
 	
-	sessionStorage.setItem("username", name);
+//	sessionStorage.setItem("username", name);
 	
-	loadpage("./html/game.html");
-}
+//	loadpage("./html/game.html");
+//}
 
 function phaser_game(){
 	loadpage("./html/phasergame.html");
