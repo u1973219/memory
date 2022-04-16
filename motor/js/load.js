@@ -24,3 +24,26 @@ var load_obj = function(){
 	return {}; 
 }();
 
+var load_obj_Survival = function(){
+	var vue_instance = new Vue({
+		el: "#saves_survival",
+		data: {
+			saves: []
+		},
+		created: function(){
+			let arrayPartides = [];
+			if(localStorage.sav2){
+				arrayPartides = JSON.parse(localStorage.sav2);
+				if(!Array.isArray(arrayPartides)) arrayPartides = [];
+			}
+			this.saves = arrayPartides;
+		},
+		methods: {
+			load: function(i){
+				sessionStorage.idPartida = i;
+				loadpage("../html/phasergame2.html");
+			}
+		}
+	});
+	return {};
+}();

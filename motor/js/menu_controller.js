@@ -36,3 +36,14 @@ function game_mode(){
 function home(){
 	loadpage("index.html");
 }
+
+function load_classic(){
+	loadpage("load.html");
+}
+function load_survival(){
+	loadpage("load_Survival.html");
+}
+
+function menu_load(){
+	loadpage("./html/menu_load.html");
+}

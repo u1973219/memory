@@ -3,14 +3,14 @@
 	<head>
 		<link rel="stylesheet" href="../styles/main.css">
 		<script src="../js/loader.js"></script>
-		<title> Load Game </title>
+		<title> Load Classic </title>
 	</head>
 	<body>
 		<div id="saves_id">
 			<h1 class="neon">Save <br> Files </h1>
 			<div v-for="(save, indx) in saves">
 				<div class="button" v-on:click="load(indx)">
-					{{save.score}}
+					{{indx}}
 				</div>
 			</div>
 		</div>

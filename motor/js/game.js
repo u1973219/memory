@@ -35,6 +35,7 @@ if (sessionStorage.idPartida && localStorage.sav){
 	let arrayPartides = JSON.parse(localStorage.sav);
 	if (sessionStorage.idPartida < arrayPartides.length)
 		l_partida = arrayPartides[sessionStorage.idPartida];
+
 }
 
 
@@ -78,13 +79,16 @@ class GameScene extends Phaser.Scene {
 		sessionStorage.clear();
 		cardsPlaying = [];
 
-		shuffle(arraycards);
-		for (var j = 0;j < this.numbercards; j++){
-			cardsPlaying.push(arraycards[j]);
-			cardsPlaying.push(arraycards[j]);
+		if(!l_partida) {
+			shuffle(arraycards);
+			for (var j = 0; j < this.numbercards; j++) {
+				cardsPlaying.push(arraycards[j]);
+				cardsPlaying.push(arraycards[j]);
+			}
+			shuffle(cardsPlaying);
 		}
-		shuffle(cardsPlaying);
-		if(l_partida) cardsPlaying = l_partida.cardsPlaying;
+		else
+			cardsPlaying = l_partida.cardsPl;
 
 
 		var button = this.add.text(400, 550, 'Save Game')
@@ -103,11 +107,11 @@ class GameScene extends Phaser.Scene {
 		this.cards = this.physics.add.staticGroup();
 
          if(l_partida) {
-
-			     girades = l_partida.girada;
+			 girades = l_partida.girada;
 			 console.log(girades);
 			 console.log(cardsPlaying);
-				 let totalcartes = l_partida.girada.length;
+				 let totalcartes = girades.length;
+				 console.log(totalcartes);
 				 let eliminat = false;
 				 let j = 0;
 			     let k = 0;
@@ -118,6 +122,8 @@ class GameScene extends Phaser.Scene {
 				 pos = 250;
 				 while(j < totalcartes) {
 				 	while(eliminat !== true && k<cardsPlaying.length) {
+						 console.log(cardsPlaying[k]);
+						 console.log(girades[j]);
 
 						if (cardsPlaying[k] === girades[j]) {
 							   eliminat = true;
@@ -134,6 +140,7 @@ class GameScene extends Phaser.Scene {
 					 j+=1;
 					 eliminat = false;
 			     }
+				 pos = 250;
 				 while(k<cardsPlaying.length){
 					 this.cards.create(pos, 300, 'back');
 					 pos += 100;
@@ -203,7 +210,7 @@ class GameScene extends Phaser.Scene {
 			score: this.score,
 			correct: this.correct,
 			firstClick: this.firstClick,
-			cardsPlaying: cardsPlaying,
+			cardsPl: cardsPlaying,
 			cards: null,
 			numbercards: this.numbercards,
 			difficulty: this.difficulty,
