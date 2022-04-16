@@ -3,11 +3,11 @@
 	<head>
 		<link rel="stylesheet" href="../styles/main.css">
 		<script src="../js/loader.js"></script>
-		<title> My first game - Options </title>
+		<title> Options page </title>
 	</head>
 	<body>
 		<div id="options_id">
-			<p class="menu-object" id="title">Options menú</p>
+			<h1 class="neon">Options </h1>
 			<div class="menu-object">
 				<label for="labelnumber">Number of cards:</label>
 				<input type="number" id="labelnumber" v-model="num">
@@ -21,8 +21,8 @@
 				<input type="radio" id="hard" value="hard" v-model="dificulty" >
 				<label for="hard">Hard</label>
 			</div>
-			<button class="menu-object" v-on:click="save"> Save </button>
-			<button class="menu-object" onclick=loadpage("../")> Discard </button>
+			<div class="button" v-on:click="save"> Save </div>
+			<div class="button" onclick=loadpage("../")> Discard </div>
 		</div>
 	</body>
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>

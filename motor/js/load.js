@@ -8,8 +8,8 @@ var load_obj = function(){
 		},
 		created: function(){
 			let arrayPartides = [];
-			if(localStorage.partides){
-				arrayPartides = JSON.parse(localStorage.partides);
+			if(localStorage.sav){
+				arrayPartides = JSON.parse(localStorage.sav);
 				if(!Array.isArray(arrayPartides)) arrayPartides = [];
 			}
 			this.saves = arrayPartides;
@@ -17,7 +17,7 @@ var load_obj = function(){
 		methods: { 
 			load: function(i){
 				sessionStorage.idPartida = i;
-				loadpage("../html/game.html");
+				loadpage("../html/phasergame.html");
 			}
 		}
 	});

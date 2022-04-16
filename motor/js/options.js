@@ -58,6 +58,6 @@ var options = function(){
 	}; 
 }();
 
-console.log(options.getNumOfCards());
+
 
 

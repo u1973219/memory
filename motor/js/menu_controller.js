@@ -16,10 +16,7 @@ function phaser_game2(){
 }
 
 function exit (){
-	if (name != ""){
-		alert("Leaving " + name + "'s game");
-	}
-	name = "";
+	loadpage("https://www.google.es/")
 }
 
 function options(){
@@ -30,3 +27,12 @@ function load(){
 	loadpage("./html/load.html");
 }
 
+function score(){
+	loadpage("./html/score.html");
+}
+function game_mode(){
+	loadpage("./html/gamemode.html");
+}
+function home(){
+	loadpage("index.html");
+}
