@@ -99,7 +99,7 @@ class GameScene extends Phaser.Scene{
         if(sessionStorage.idPartida) { //si venim d'un load
 
             //variables que utilitzo per a fer bucles més endevant.
-            let totalcartes = l_partida.girada.length;
+            let cartesTauler = this.cardsPlaying.length;
             let eliminat = false;
             let j = 0;
             let k = 0;
@@ -109,29 +109,30 @@ class GameScene extends Phaser.Scene{
                 pos += 100;
             }
             pos = 250;
-            while(j < totalcartes) { //per a posar a sobre de les imatges corresponents una carta per radere. osigui per deixar les cartes tal qual girades o no del que estaven al fer el save.
-                while(k<this.cardsPlaying.length) {
-
-                    if (!eliminat && this.cardsPlaying[k] === this.girades[j]) {
+            var arrayP = [];
+            while(k<cartesTauler) {//per a posar a sobre de les imatges corresponents una carta per radere. osigui per deixar les cartes tal qual girades o no del que estaven al fer el save.
+                j = 0;
+                while(!eliminat && j<this.girades.length){
+                    if(this.girades[j] === this.cardsPlaying[k]) {//si les cartes coincideixen
                         eliminat = true;
-                        this.cardsPlaying.splice(k,1);
+                        arrayP.push(k);//fem push per guardar que la carta s'ha girat per ajudar-nos més avall
                     }
-                    else {
-                        k += 1;
-                    }
-                    pos += 100;
-
-
+                    else j += 1;
                 }
-                j+=1;
+                if(!eliminat || this.girades.length===0) this.cards.create(pos, 300, 'back');
+                else this.girades.splice(j,1);
                 eliminat = false;
+                pos+=100;
+                k+=1;
             }
-            pos = 250;
-            while(k<this.cardsPlaying.length){
-                this.cards.create(pos, 300, 'back');
-                pos += 100;
-                k += 1;
+            var nova_a = [];//creearem nova array de suport
+            for (var l = 0;l < this.numbercards*2;l++){
+
+
+                if(!arrayP.includes(l)) { nova_a.push(this.cardsPlaying[l]); } // si l'index l actual no està a l'arrayP vol dir que la carta no s'esta mostrant per tant afegim
+
             }
+            this.cardsPlaying = nova_a.slice(); //donem doncs el nou valor, on només tindrà ara les cartes que no es veuen
         }
 
         else{
@@ -155,7 +156,7 @@ class GameScene extends Phaser.Scene{
                 this.girades.push(card.card_id); //afegeim la carta actual a girades perque la estem veient i està girada.
                 if (this.firstClick){
                     if (this.firstClick.card_id !== card.card_id){
-                        this.score -= this.level*4; //per a la puntuació fem nivell * 4
+                        this.score -= this.level*3; //per a la puntuació fem nivell * 3
                         this.time.delayedCall(1000, () => //funció que tarda un segon en girar les cartes
                             {
                                 card.enableBody(false, 0, 0, true, true);
