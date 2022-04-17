@@ -1,3 +1,5 @@
+
+//funció que ens barreja les cartes de la array passada
 function shuffle(array) {
 	let currentIndex = array.length,  randomIndex;
 
@@ -7,13 +9,13 @@ function shuffle(array) {
 		currentIndex--;
 
 		// intercanvia amb un altre
-		[array[currentIndex], array[randomIndex]] = [
-			array[randomIndex], array[currentIndex]];
+		[array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
 	}
 
 	return array;
 }
 
+//carrega les opcions de la partida
 var load_param = function (){
 
 	var json = localStorage.getItem("config");
@@ -25,11 +27,12 @@ var load_param = function (){
 	}
 
 }
-load_param();
+load_param(); //per executar la funció anterior
 
+//arrays de cartes girades i de les cartes del tauler
 var girades = [];
 var cardsPlaying = [];
-
+//carreguem una partida si es que venim del menú de load.
 let l_partida = null;
 if (sessionStorage.idPartida && localStorage.sav){
 	let arrayPartides = JSON.parse(localStorage.sav);
@@ -41,7 +44,7 @@ if (sessionStorage.idPartida && localStorage.sav){
 
 class GameScene extends Phaser.Scene {
     constructor (){
-		if (l_partida){
+		if (l_partida){// si venim d'una partida carregada posem els valors que haviem guardat
 			super('GameScene');
 			this.cards = null;
 			this.score = l_partida.score;
@@ -51,7 +54,7 @@ class GameScene extends Phaser.Scene {
 			this.difficulty = l_partida.difficulty;
 
 		}
-		else {
+		else {//sino els valors estàndards
 			super('GameScene');
 			this.cards = null;
 			this.score = 100;
@@ -74,24 +77,24 @@ class GameScene extends Phaser.Scene {
 	}
 	
     create (){
-		let arraycards = ['co', 'cb','sb','so','tb','to'];
+		let arraycards = ['co', 'cb','sb','so','tb','to'];//array amb totes les cartes
 
-		sessionStorage.clear();
+		sessionStorage.clear(); //borrem si veniem de un load la sessió que haviem carregat
 		cardsPlaying = [];
 
-		if(!l_partida) {
-			shuffle(arraycards);
+		if(!l_partida) {// si creem una nova partida entrem aquí si és d'una carregada no ja que això és per a crear cardsPlaying que creea les cartes del tauler.
+			shuffle(arraycards);//barrejem array de cartes
 			for (var j = 0; j < this.numbercards; j++) {
 				cardsPlaying.push(arraycards[j]);
-				cardsPlaying.push(arraycards[j]);
+				cardsPlaying.push(arraycards[j]);//fem un push dues vegades ja que necesitem cada carta dos cops.
 			}
-			shuffle(cardsPlaying);
+			shuffle(cardsPlaying);//barrejem array de cartes del tauler
 		}
 		else
 			cardsPlaying = l_partida.cardsPl;
 
 
-		var button = this.add.text(400, 550, 'Save Game')
+		var button = this.add.text(400, 550, 'Save Game') //botó de guardar partida
 			.setOrigin(0.5)
 			.setPadding(10)
 			.setStyle({ backgroundColor: '#111' })
@@ -106,50 +109,44 @@ class GameScene extends Phaser.Scene {
 		let pos = 250;
 		this.cards = this.physics.add.staticGroup();
 
-         if(l_partida) {
+         if(l_partida) {//si venim d'un load
 			 girades = l_partida.girada;
-			 console.log(girades);
-			 console.log(cardsPlaying);
+			 //variables que utilitzo per a fer bucles més endevant.
 				 let totalcartes = girades.length;
-				 console.log(totalcartes);
+				 let cartesTauler = cardsPlaying.length;
 				 let eliminat = false;
 				 let j = 0;
 			     let k = 0;
-			 for (var n = 0; n < this.numbercards * 2; n++) {
+			 for (var n = 0; n < this.numbercards * 2; n++) { // s'afageixen les imatges de les cartes
 				 this.add.image(pos, 300, cardsPlaying[n]);
 				 pos += 100;
 			 }
 				 pos = 250;
-				 while(j < totalcartes) {
-				 	while(eliminat !== true && k<cardsPlaying.length) {
-						 console.log(cardsPlaying[k]);
-						 console.log(girades[j]);
 
-						if (cardsPlaying[k] === girades[j]) {
-							   eliminat = true;
-							   cardsPlaying.splice(k,1);
-						   }
-						   else {
-							  this.cards.create(pos, 300, 'back');
-							  k += 1;
-						  }
-							  pos += 100;
+			 while(j<totalcartes) {//per a posar a sobre de les imatges corresponents una carta per radere. osigui per deixar les cartes tal qual girades o no del que estaven al fer el save.
+				 while(k<cartesTauler){
+					 if(girades[j] === cardsPlaying[k]) {
+						 j += 1;
+					 }
+					 else
+						 this.cards.create(pos, 300, 'back');
 
+					 k+=1;
 
-				     }
-					 j+=1;
-					 eliminat = false;
-			     }
+				 }
+				 j+=1;
+
+			 }
 				 pos = 250;
 				 while(k<cardsPlaying.length){
 					 this.cards.create(pos, 300, 'back');
 					 pos += 100;
 					 k += 1;
 				 }
-			 console.log(cardsPlaying);
+
 		 }
-		 else{
-			 for (var k = 0; k < this.numbercards * 2; k++) {
+		 else{ //si creem nova partida
+			 for (var k = 0; k < this.numbercards * 2; k++) {// fem un bucle per a posar totes les cartes girades ila seva imatge corresponent a sota.
 				 this.add.image(pos, 300, cardsPlaying[k]);
 				 this.cards.create(pos, 300, 'back');
 				 pos += 100;
@@ -165,18 +162,19 @@ class GameScene extends Phaser.Scene {
 			card.setInteractive();
 			card.on('pointerup', () => {
 				card.disableBody(true,true);
-				girades.push(card.card_id);
+				girades.push(card.card_id);//afegeim la carta actual a girades perque la estem veient i està girada.
 				if (this.firstClick){
 					if (this.firstClick.card_id !== card.card_id){
+						//per a calcular el score depenen de si tenim diciultat easy normal o hard
 						if(this.difficulty === "easy") this.score -= 20;
 						else if (this.difficulty === "normal") this.score -= 30;
 						else this.score -= 40;
-						this.time.delayedCall(1000, () =>
+						this.time.delayedCall(1000, () =>//funció que tarda un segon en girar les cartes
 						{
 							card.enableBody(false, 0, 0, true, true);
 							this.firstClick.enableBody(false, 0, 0, true, true);
 							girades.pop();
-							girades.pop();
+							girades.pop();//fem un .pop de girades perque vol dir que no estan girades les cartes afegides ja
 							this.firstClick = null;
 						},
 							[],this);
@@ -205,7 +203,7 @@ class GameScene extends Phaser.Scene {
 	
 	update (){	}
 
-	    save_game() {
+	    save_game() {//funció de guardar dades de partida
 		let joc = {
 			score: this.score,
 			correct: this.correct,

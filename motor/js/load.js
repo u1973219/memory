@@ -1,5 +1,7 @@
 "use strict";
 
+
+//el primer serveix per a caregar les partides guardades del mode de joc 1, també fa el load al sessionstorage per quan cliquem una partida guardada
 var load_obj = function(){
 	var vue_instance = new Vue({
 		el: "#saves_id",
@@ -23,6 +25,8 @@ var load_obj = function(){
 	});
 	return {}; 
 }();
+
+//el mateix d'adalt però pel mode de joc 2
 
 var load_obj_Survival = function(){
 	var vue_instance = new Vue({
